@@ -45,7 +45,7 @@ class Task{
           id_important = $2,
           decription = $3
       WHERE task.id = $4
-      RETURNING 8
+      RETURNING *
     `, [id_category, id_important, description, id]);
     res.json(newTask);
   }
