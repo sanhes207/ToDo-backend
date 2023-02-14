@@ -9,8 +9,6 @@ class User{
       FROM person
       WHERE person.name = $1
     `, [name]);
-    const {id} = await user.rows[0]
-    res.cookie('id_user', `${id}`);
     res.json(user.rows[0]);
   }
   async createUser(req, res) {

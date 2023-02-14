@@ -1,7 +1,6 @@
 const db = require('../db');
 
 class Task{
-  
 
   async addNewTask(req, res) {
     const {id_category, id_important, id_person, description} = req.body;
@@ -12,7 +11,8 @@ class Task{
     res.json(newTask);
   }
   async getAllTask(req, res) {
-    const {id_user} = req.cookies;
+    const {user_id} = req.headers;  
+    console.log(user_id);
     const tasks = await db.query(`
       SELECT task.id, task.description, category.title AS category, important.title AS important 
       FROM task
@@ -21,7 +21,7 @@ class Task{
       INNER JOIN category
       ON category.id = task.id_category
       WHERE task.id_person = $1`
-    , [id_user]);
+    , [user_id]);
     res.json(tasks.rows);
   }
   async getTask(req, res) {
