@@ -10,15 +10,14 @@ class Category {
 		res.json('Новая категория была создана');	
 	}
 	async getCategorys(req, res) {
-		const {id_user} = req.cookies;
-		console.log(id_user)
+		const {user_id} = req.headers;
 		const getCategorys = await db.query(`
-			SELECT category.title
+			SELECT DISTINCT category.id, category.title
 			FROM category
 			INNER JOIN task
 			ON task.id_category = category.id
 			WHERE task.id_person = $1
-		`, [id_user]);
+		`, [user_id]);
 		res.json(getCategorys.rows);
 	}
 	async updateCategory(req, res) {

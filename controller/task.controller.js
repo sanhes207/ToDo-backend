@@ -10,9 +10,8 @@ class Task{
     `, [id_category, description, id_important, id_person]);
     res.json(newTask);
   }
-  async getAllTask(req, res) {
-    const {user_id} = req.headers;  
-    console.log(user_id);
+  async getAllTaskByCategory(req, res) {
+    const {user_id, category_id} = req.headers;
     const tasks = await db.query(`
       SELECT task.id, task.description, category.title AS category, important.title AS important 
       FROM task
@@ -20,8 +19,8 @@ class Task{
       ON important.id = task.id_important
       INNER JOIN category
       ON category.id = task.id_category
-      WHERE task.id_person = $1`
-    , [user_id]);
+      WHERE task.id_person = $1 AND category.title = $2`
+    , [user_id, category_id]);
     res.json(tasks.rows);
   }
   async getTask(req, res) {
