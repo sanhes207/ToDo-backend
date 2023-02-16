@@ -19,7 +19,7 @@ class Task{
       ON important.id = task.id_important
       INNER JOIN category
       ON category.id = task.id_category
-      WHERE task.id_person = $1 AND category.title = $2`
+      WHERE task.id_person = $1 AND task.id_category = $2`
     , [user_id, category_id]);
     res.json(tasks.rows);
   }
