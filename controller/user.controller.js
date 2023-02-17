@@ -5,7 +5,7 @@ class User{
   async getUser(req, res) {
     const name = req.params.name;
     const user = await db.query(`
-      SELECT id 
+      SELECT id, name 
       FROM person
       WHERE person.name = $1
     `, [name]);
