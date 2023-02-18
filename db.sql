@@ -23,4 +23,4 @@ CREATE TABLE task (
 );
 
 INSERT INTO  person (name)
-VALUE ('user');
+VALUES ('user');
