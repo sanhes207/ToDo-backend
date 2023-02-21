@@ -12,7 +12,7 @@ class Category {
 	async getCategorys(req, res) {
 		const {user_id} = req.headers;
 		const getCategorys = await db.query(`
-			SELECT DISTINCT category.id, category.title
+			SELECT DISTINCT category.id, category.title, category.color
 			FROM category	
 			WHERE person_id = $1
 		`, [user_id]);
