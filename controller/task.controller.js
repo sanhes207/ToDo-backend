@@ -5,6 +5,7 @@ class Task{
 
   async addNewTask(req, res) {
     const {category_id, description} = req.body;
+
     await db.query(query.addTask, [category_id, description])
     .then(() => {
       res.status(201).send({message: "New task added"});
@@ -16,6 +17,7 @@ class Task{
 
   async getAllTaskByCategory(req, res) {
     const {user_id, category_id} = req.headers;
+
     await db.query(query.getAllTask, [category_id, user_id])
     .then((result) => {
       res.status(200).json(result.rows);
@@ -27,7 +29,8 @@ class Task{
 
   async updateTask(req, res) {
     const {is_checked, task_id} = req.body;
-    const newTask = await db.query(query.updateTask, [is_checked, task_id])
+
+    await db.query(query.updateTask, [is_checked, task_id])
     .then(() => {
       res.status(200).send({message: 'Task success update'});
     })
@@ -38,7 +41,8 @@ class Task{
 
   async deleteTask(req, res) {
     const user_id = req.headers;
-    const task = await db.query(query.deleteTask, [user_id])
+
+    await db.query(query.deleteTask, [user_id])
     .then(() => {
       res.status(200).send({message: 'Task success delete'});
     })
