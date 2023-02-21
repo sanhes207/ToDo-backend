@@ -1,33 +1,42 @@
 const db = require('../db');
+const querys = require('../querys/category.query.js');
 
 class Category {
-	async addCategory(req, res) {
-		const {user_id, title} = req.body;
-		const newCategory = await db.query(`
-			INSERT INTO category (title, person_id)
-			values ($1, $2)
-		`, [title, user_id]);
-		res.json(newCategory);	
-	}
-	async getCategorys(req, res) {
-		const {user_id} = req.headers;
-		const getCategorys = await db.query(`
-			SELECT DISTINCT category.id, category.title, category.color
-			FROM category	
-			WHERE person_id = $1
-		`, [user_id]);
-		res.json(getCategorys.rows);
-	}
-	async updateCategory(req, res) {
-		const {category_id, title, id_color} = req.body;
-		const category = await db.query(`
-		UPDATE category
-		SET title = $1
-				id_color = $2
-		WHERE category.id = $3
-		`, [title, id_color, category_id]);
-		res.json(category.rows[0]);
-	}
+  async addCategory(req, res) {
+    const {user_id, title, color} = req.body;
+
+    await db.query(color? querys.insertCategory : querys.insertCategoryWithColor, [user_id, title, color])
+    .then(() => {
+      res.status(201).send({message: 'New category added'})
+    })
+    .catch(() => {
+      res.status(500).send({message: 'Error'})
+    })
+  }
+
+  async getCategorys(req, res) {
+    const {user_id} = req.headers;
+
+    await db.query(querys.getCategory, [user_id])
+    .then((result) => {
+      res.status(200).json(result.rows)
+    })
+    .catch(() => {
+      res.status(500).send({message: 'Error'})
+    })
+   }
+
+  async updateCategory(req, res) {
+    const {category_id, title, color} = req.body;
+    
+    await db.query(updateCategory, [title, color, category_id])
+    .then((result) => {
+      res.status(200).json(result.rows[0])
+    })
+    .catch(() => {
+      res.status(500).send({message: 'Error'})
+    })
+  }
 }
 
 module.exports = new Category();
