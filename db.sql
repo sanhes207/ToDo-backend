@@ -4,13 +4,21 @@ CREATE TABLE person (
 	PRIMARY KEY (id)
 );
 
+CREATE TABLE color(
+	id SERIAL NOT NULL,
+	title VARCHAR(25),
+	hex_code VARCHAR(7),
+	PRIMARY KEY (id)
+);
+
 CREATE TABLE category (
 	id SERIAL NOT NULL,
 	title VARCHAR(255) NOT NULL,
-	color VARCHAR(7) NOT NULL DEFAULT '#FFFFFF',
+	color_id INT NOT NULL DEFAULT 1,
 	person_id INT NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (person_id) REFERENCES person(id) 
+	FOREIGN KEY (person_id) REFERENCES person(id),
+	FOREIGN KEY (color_id) REFERENCES color(id)
 );
 
 CREATE TABLE task (
@@ -23,4 +31,7 @@ CREATE TABLE task (
 );
 
 INSERT INTO  person (name)
-VALUES ('user');
+VALUES ('user'), ('Иван');
+
+INSERT INTO color(title, hex_code) 
+VALUES ('White', '#FFFFFF'), ('Red', '#FF0000'), ('Green', '#00FF00'), ('Blue', '#0000FF');
