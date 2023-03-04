@@ -34,7 +34,7 @@ INSERT INTO  person (name)
 VALUES ('user'), ('Иван');
 
 INSERT INTO category (title, color_id, person_id)
-VALUE ('Test1', 2, 1);
+VALUES ('Test1', 2, 1);
 
 INSERT INTO color(title, hex_code) 
 VALUES ('White', '#FFFFFF'), ('Red', '#FF0000'), ('Green', '#00FF00'), ('Blue', '#0000FF');
