@@ -16,9 +16,9 @@ class Task{
   }
 
   async getAllTaskByCategory(req, res) {
-    const {user_id, category_id} = req.headers;
+    const {category_id} = req.query;
 
-    await db.query(query.getAllTask, [category_id, user_id])
+    await db.query(query.getAllTask, [category_id])
     .then((result) => {
       res.status(200).json(result.rows);
     })

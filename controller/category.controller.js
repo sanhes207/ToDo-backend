@@ -3,9 +3,9 @@ const querys = require('../querys/category.query.js');
 
 class Category {
   async addCategory(req, res) {
-    const {user_id, title, color} = req.body;
-
-    await db.query(color? querys.insertCategory : querys.insertCategoryWithColor, [user_id, title, color])
+    const {user_id, title, color_id} = req.body;
+    
+    await db.query(querys.insertCategory, [title, user_id, color_id])
     .then(() => {
       res.status(201).send({message: 'New category added'})
     })
