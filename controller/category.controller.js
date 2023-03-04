@@ -15,7 +15,7 @@ class Category {
   }
 
   async getCategorys(req, res) {
-    const {user_id} = req.params.user_id;
+    const {user_id} = req.query;
 
     await db.query(querys.getCategory, [user_id])
     .then((result) => {
