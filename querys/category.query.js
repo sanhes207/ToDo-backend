@@ -17,6 +17,5 @@ const updateCategory = `UPDATE category
 module.exports = {
   getCategory,
   insertCategory,
-  insertCategoryWithColor,
   updateCategory
 }
